@@ -17,7 +17,8 @@ class Templates(models.Model):
     style = models.ForeignKey(Style, related_name="templates", on_delete=models.CASCADE, null=True)
 
     class Meta:
-        ordering = ['created']
+        ordering = ['-created']
+        verbose_name_plural = "Templates Boards"
 
     def __str__(self):
         return self.name_template

@@ -13,7 +13,6 @@ class Style(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    
     width = models.FloatField(default=0)
     height = models.FloatField(default=0)
     width_height_units = models.CharField(max_length=255, choices=UNITS, default="0")
@@ -23,9 +22,15 @@ class Style(models.Model):
     opacity= models.IntegerField(default=0),
     color= models.CharField(default="#FFFFFF", max_length=20 ,blank=True, null=True)
     dpi= models.FloatField(default=72.0)
-
+    name_template = models.CharField(max_length=255, blank=True, editable=True)
+    
     class Meta:
-        ordering = ['created']
+        ordering = ['-created']
+        verbose_name_plural = "Style Boards"
     
     def __str__(self):
         return self.name
+
+    def save(self, *agrs, **kwargs):
+        self.name_template = f"{self.name} - {self.created}"
+        self.save(*agrs, **kwargs)
