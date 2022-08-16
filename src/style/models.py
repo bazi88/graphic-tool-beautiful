@@ -33,4 +33,4 @@ class Style(models.Model):
 
     def save(self, *agrs, **kwargs):
         self.name_template = f"{self.name} - {self.created}"
-        self.save(*agrs, **kwargs)
+        super(Style,self).save(*agrs, **kwargs)

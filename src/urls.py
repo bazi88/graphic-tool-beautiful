@@ -15,7 +15,7 @@ from drf_yasg import openapi
 from src.social.views import exchange_token, complete_twitter_login
 from src.files.urls import files_router
 from src.users.urls import users_router
-from src.template.views import ListView
+from src.template.views import TemplateView, TemplateDetailView
 schema_view = get_schema_view(
     openapi.Info(title="Pastebin API", default_version='v1'),
     public=True,
@@ -34,7 +34,8 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     # api
     path('api/v1/', include(router.urls)),
-    path('api/v1/templates/', ListView.as_view()),
+    path('api/v1/templates/', TemplateView.as_view()),
+    url(r'api/v1/templates/(?P<pk>[0-9]+)/$', TemplateDetailView.as_view()),
     url(r'^api/v1/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     # auth
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
