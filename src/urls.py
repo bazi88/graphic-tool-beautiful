@@ -22,7 +22,6 @@ schema_view = get_schema_view(
 )
 
 router = DefaultRouter()
-
 router.registry.extend(users_router.registry)
 router.registry.extend(files_router.registry)
 
@@ -35,7 +34,7 @@ urlpatterns = [
     # api
     path('api/v1/', include(router.urls)),
     path('api/v1/templates/', TemplateView.as_view()),
-    url(r'api/v1/templates/(?P<pk>[0-9]+)/$', TemplateDetailView.as_view()),
+    path('api/v1/templates/<int:pk>/', TemplateDetailView.as_view()),
     url(r'^api/v1/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     # auth
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -52,4 +51,6 @@ urlpatterns = [
     url(r'^health/', include('health_check.urls')),
     # the 'api-root' from django rest-frameworks default router
     re_path(r'^$', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=False)),
+    # debug toolbar
+    path('__debug__/', include('debug_toolbar.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

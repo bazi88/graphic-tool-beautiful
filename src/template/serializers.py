@@ -5,4 +5,4 @@ from src.template.models import Templates
 class TemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Templates
-        fields = "__all__"
+        fields = ('created','name_template','updated', 'type_template', 'style', 'name')

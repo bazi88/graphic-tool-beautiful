@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'jet',
     'django.contrib.admin',
     # Third party apps
+    'debug_toolbar',
     'rest_framework',  # utilities for rest apis
     'rest_framework.authtoken',  # token authentication
     'django_filters',  # for filtering rest endpoints
@@ -59,6 +60,10 @@ INSTALLED_APPS = (
     # 'actstream',                  # activity stream
 )
 
+import socket  # only if you haven't already imported this
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+
 # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
 MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
@@ -70,6 +75,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', '#p7&kxb7y^yq8ahfw5%$xh=f8=&1y*5+a5($8w_f7kw!-qig(j')
